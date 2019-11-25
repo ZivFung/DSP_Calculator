@@ -1,2 +1,2 @@
 # DSP_Calculator
-This is some useful matlab tools for digital signal processing method.
+These are some useful matlab tools for digital signal processing method.
