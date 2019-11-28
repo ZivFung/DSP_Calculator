@@ -26,14 +26,14 @@ function [DestImg] = FreqDomainImgZoomout(file, destXNum, destYNum)
     
     
     %split spectrum
-    y2h = ceil(YNum*yScale/2);
-    x2h = ceil(XNum*xScale/2);
+    y2h = ceil(destYNum/2);
+    x2h = ceil(destXNum/2);
     
-    x1l = XNum - (floor(XNum*xScale/2)) + 1;
+    x1l = XNum - (floor(destXNum/2)) + 1;
     y1h = y2h;
     
     x3h = x2h;
-    y3l = YNum - (floor(YNum*yScale/2)) + 1;
+    y3l = YNum - (floor(destYNum/2)) + 1;
     
     y4l = y3l;
     x4l = x1l;
@@ -65,13 +65,20 @@ function [DestImg] = FreqDomainImgZoomout(file, destXNum, destYNum)
                    Quadrant3B, Quadrant4B];
     DestImgB = ifft2(DestImgFreqB);
     
-    DestImgR = real(DestImgR);
-    DestImgG = real(DestImgG);
-    DestImgB = real(DestImgB);
+%     maxR = max(max(DestImgR));
+%     maxG = max(max(DestImgG));
+%     maxB = max(max(DestImgB));
     
     DestImgR = DestImgR * FftConvertGain;
     DestImgG = DestImgG * FftConvertGain;
     DestImgB = DestImgB * FftConvertGain;
+%     DestImgR = DestImgR * 255 / maxR;
+%     DestImgG = DestImgG * 255 / maxG;
+%     DestImgB = DestImgB * 255 / maxB;
+    
+    DestImgR = real(DestImgR);
+    DestImgG = real(DestImgG);
+    DestImgB = real(DestImgB);
     
     DestImgR = uint8(DestImgR);
     DestImgG = uint8(DestImgG);
@@ -80,6 +87,5 @@ function [DestImg] = FreqDomainImgZoomout(file, destXNum, destYNum)
     DestImg(:,:,1) = DestImgR;
     DestImg(:,:,2) = DestImgG;
     DestImg(:,:,3) = DestImgB;
-
-    imshow(DestImg);
  end
+    
